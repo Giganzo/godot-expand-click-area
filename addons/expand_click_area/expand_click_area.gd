@@ -41,10 +41,6 @@ var _click_area_overrides: Array[int] = [
 	click_area_right,
 	click_area_bottom,
 ]
-var _click_area_left: int
-var _click_area_top: int
-var _click_area_right: int
-var _click_area_bottom: int
 
 
 func _ready() -> void:
@@ -56,8 +52,8 @@ func _ready() -> void:
 	layout_mode = 1
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_PASS
-	get_parent_control().theme_changed.connect(_setup_click_area)
-	get_parent_control().theme_changed.connect(_connect_theme_changed)
+	theme_changed.connect(_setup_click_area)
+	theme_changed.connect(_connect_theme_changed)
 	_setup_click_area()
 	
 
@@ -65,36 +61,23 @@ func _setup_click_area() -> void:
 	for i in click_area.size():
 		var side = click_area.keys()[i]
 		if _click_area_overrides[i] > -1:
-			#set(side, _click_area_overrides[i])
 			_update_side_offset(i, _click_area_overrides[i])
 			continue
 		var theme_type: String = get_parent_control().theme_type_variation
 		if not get_parent_control().has_theme_constant(side, theme_type):
 			theme_type = get_parent_control().get_class()
 		if get_parent_control().has_theme_constant(side, theme_type):
-			#set(side, get_parent_control().get_theme_constant(side, theme_type) )
-			_update_side_offset(i, get_parent_control().get_theme_constant(side, theme_type))
+			_update_side_offset(i, max(0, get_parent_control().get_theme_constant(side, theme_type)))
 		else:
-			#set(side, 0)
 			_update_side_offset(i, 0)
 			
-	#for side in click_area.keys():
-		#var theme_type: String = get_parent_control().theme_type_variation
-		#if not get_parent_control().has_theme_constant(side, theme_type):
-			#theme_type = get_parent_control().get_class()
-		#if get_parent_control().has_theme_constant(side, theme_type):
-			#set(side, get_parent_control().get_theme_constant(side, theme_type) )
-		#else:
-			#set(side, 0)
+			
 func _update_side_offset(side: Side, amount: int) -> void:
 	set_offset(side, -amount if side == SIDE_LEFT or side == SIDE_TOP else amount)
-	#set_offset(SIDE_LEFT, -_click_area_left)
-	#set_offset(SIDE_TOP, -_click_area_top)
-	#set_offset(SIDE_RIGHT, _click_area_right)
-	#set_offset(SIDE_BOTTOM, _click_area_bottom)
 	
 	
 func _connect_theme_changed() -> void:
-	if get_parent_control().theme:
-		get_parent_control().theme.changed.connect(_setup_click_area)
+	if theme:
+		if not theme.changed.is_connected(_setup_click_area):
+			theme.changed.connect(_setup_click_area)
 	
