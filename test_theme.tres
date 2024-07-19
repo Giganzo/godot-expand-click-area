@@ -1,0 +1,29 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bbh6g07vhk03i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8wxga"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gm27n"]
+
+[resource]
+ArrowButton/base_type = &"Button"
+ArrowButton/constants/click_area_bottom = 10
+ArrowButton/constants/click_area_left = 10
+ArrowButton/constants/click_area_right = 10
+ArrowButton/constants/click_area_top = 10
+ArrowButton/styles/normal = SubResource("StyleBoxEmpty_8wxga")
+Button/constants/click_area_bottom = 20
+Button/constants/click_area_left = 20
+Button/constants/click_area_right = 20
+Button/constants/click_area_top = 15
+Button2/base_type = &"ArrowButton"
+CheckExtra/base_type = &"CheckBox"
+LinkButton/constants/click_area_left = 10
+LinkButton/constants/click_area_right = 10
+LinkButton/constants/click_area_top = 12
+OptionButton/constants/click_area_bottom = 2
+TestB/base_type = &"Button"
+TestB/constants/click_area_bottom = 10
+TestB/constants/click_area_left = 10
+TestB/constants/click_area_right = 10
+TestB/constants/click_area_top = 10
+TestB/styles/normal = SubResource("StyleBoxEmpty_gm27n")
