@@ -63,11 +63,8 @@ func _setup_click_area() -> void:
 		if _click_area_overrides[i] > -1:
 			_update_side_offset(i, _click_area_overrides[i])
 			continue
-		var theme_type: String = get_parent_control().theme_type_variation
-		if not get_parent_control().has_theme_constant(side, theme_type):
-			theme_type = get_parent_control().get_class()
-		if get_parent_control().has_theme_constant(side, theme_type):
-			_update_side_offset(i, max(0, get_parent_control().get_theme_constant(side, theme_type)))
+		if get_parent_control().has_theme_constant(side):
+			_update_side_offset(i, max(0, get_parent_control().get_theme_constant(side))) 
 		else:
 			_update_side_offset(i, 0)
 			
